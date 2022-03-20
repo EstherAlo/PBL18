@@ -1,9 +1,8 @@
 # create key from key management system
 resource "aws_kms_key" "ACS-kms" {
   description = "KMS key "
-
-}
-
+  }
+ 
 # create key alias
 resource "aws_kms_alias" "alias" {
   name          = "alias/kms"
@@ -15,25 +14,28 @@ resource "aws_efs_file_system" "ACS-efs" {
   encrypted  = true
   kms_key_id = aws_kms_key.ACS-kms.arn
 
-  tags = {
-    Name = "ACS-efs"
-  }
+tags = merge(
+    var.tags,
+    {
+      Name = "ACS-file-system"
+    },
+  )
 }
 
 
 # set first mount target for the EFS 
 resource "aws_efs_mount_target" "subnet-1" {
   file_system_id  = aws_efs_file_system.ACS-efs.id
-  subnet_id       = aws_subnet.private[0].id
-  security_groups = [aws_security_group.datalayer-sg.id]
+  subnet_id       = var.efs-subnet-1
+  security_groups = var.efs-sg
 }
 
 
 # set second mount target for the EFS 
 resource "aws_efs_mount_target" "subnet-2" {
   file_system_id  = aws_efs_file_system.ACS-efs.id
-  subnet_id       = aws_subnet.private[1].id
-  security_groups = [aws_security_group.datalayer-sg.id]
+  subnet_id       = var.efs-subnet-2
+  security_groups = var.efs-sg
 }
 
 
