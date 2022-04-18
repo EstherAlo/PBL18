@@ -1,29 +1,42 @@
+output "public_subnets-1" {
+  value       = aws_subnet.public[0].id
+  description = "The first public subnet in the subnets"
+}
 
-output "ALB-sg" {
-  value = aws_security_group.ACS["ext-alb-sg"].id
+output "public_subnets-2" {
+  value       = aws_subnet.public[1].id
+  description = "The first public subnet"
 }
 
 
-output "IALB-sg" {
-  value = aws_security_group.ACS["int-alb-sg"].id
+output "private_subnets-1" {
+  value       = aws_subnet.private[0].id
+  description = "The first private subnet"
+}
+
+output "private_subnets-2" {
+  value       = aws_subnet.private[1].id
+  description = "The second private subnet"
 }
 
 
-output "bastion-sg" {
-  value = aws_security_group.ACS["bastion-sg"].id
+output "private_subnets-3" {
+  value       = aws_subnet.private[2].id
+  description = "The third private subnet"
 }
 
 
-output "nginx-sg" {
-  value = aws_security_group.ACS["nginx-sg"].id
+output "private_subnets-4" {
+  value       = aws_subnet.private[3].id
+  description = "The fourth private subnet"
 }
 
 
-output "web-sg" {
-  value = aws_security_group.ACS["webserver-sg"].id
+output "vpc_id" {
+  value = aws_vpc.main.id
 }
 
 
-output "datalayer-sg" {
-  value = aws_security_group.ACS["datalayer-sg"].id
+output "instance_profile" {
+  value = aws_iam_instance_profile.ip.id
 }
